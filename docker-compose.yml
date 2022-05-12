@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+
+  ########################## web client service ####################################
+  bible-client-app:
+    container-name: bible-client-app
+    build: ./services/bible-client-app
+    port:
+      - 8080:8080
+    volumes:
+      - ./services/bible-client-app/:/app
+    restart: always
+
+  ########################### web server service ##################################
+  bible-server-app:
+    container_name: bible-server-app
+    build: ./services/bible-server-app
+    port:
+      - 5000:5000
+    volumes:
+      - /services/bible-server-app:/app
+    restart: always
+
