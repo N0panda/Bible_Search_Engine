@@ -1,0 +1,1 @@
+export { UserResearch } from "./userResearch"

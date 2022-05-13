@@ -6,7 +6,7 @@ services:
     container_name: "bible-client-app"
     build: ./services/bible-client-app
     ports:
-      - 8080:8080
+      - 3000:3000
     volumes:
       - ./services/bible-client-app/:/app
     restart: always
@@ -14,11 +14,12 @@ services:
   ########################### web server service ##################################
   bible-server-app:
     container_name: "bible-server-app"
-    build: ./services/bible-server-app
+    build: ./services/bible-server-app/
     ports:
       - 5000:5000
     volumes:
-      - /services/bible-server-app:/app
+      - ./services/bible-server-app/:/app
+      - ./services/bible-server-app/node_modules/:/app/node_modules
     restart: always
 
   ########################## elasticsearch database ###############################
