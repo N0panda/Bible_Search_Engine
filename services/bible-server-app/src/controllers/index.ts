@@ -1,0 +1,1 @@
+export { searchInBook } from "./research"
