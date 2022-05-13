@@ -1,0 +1,1 @@
+export { matchUserQueryInDatabase } from "./elasticSearchQueries";
