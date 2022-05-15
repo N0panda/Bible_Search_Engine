@@ -79,7 +79,6 @@ export function SearchBar() {
     setUserInput(data);
   }
 
-  const ref = "http://localhost:3000/"
   return (
     <div className="search" >
       <div className="searchInputs">
