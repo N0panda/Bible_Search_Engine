@@ -1,1 +1,2 @@
-export { searchInBook } from "./research"
+export { searchInBook } from "./research";
+export { getEntireChapter } from "./chapterLecture";

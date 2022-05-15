@@ -1,2 +1,2 @@
-export { userInputParser } from "./parser";
-export { searchBibleVerse } from "./bibleResearch";
+export { userInputParser, chapterParser, bookParser } from "./parser";
+export { searchBibleVerse, searchBibleFullChapter } from "./bibleResearch";

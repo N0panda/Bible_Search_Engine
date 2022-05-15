@@ -1,1 +1,1 @@
-export { matchUserQueryInDatabase } from "./elasticSearchQueries";
+export { matchUserQueryInDatabase, getFullChapterInDatabase } from "./elasticSearchQueries";
