@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap");
+
+.errorPage {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Nunito", sans-serif;
+  background-image: linear-gradient(90deg, #410076, #8820dd);
+}
+
+.err404 {
+  font-size: 180px;
+  color: rgb(205, 194, 223);
+}
