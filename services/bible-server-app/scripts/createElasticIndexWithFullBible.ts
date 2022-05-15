@@ -69,34 +69,13 @@ async function fillElasticIndex(client: Client): Promise<void> {
 
   const body = await data.flatMap((doc: any) => [{ index: { _index: 'bible' } }, doc])
   await client.bulk({
-    refresh: "true",
+    refresh: true,
     body: body,
   }).catch((err) => {
     console.log(err)
     return;
   })
   console.log("Database correctly Filles !")
-  // for (const elem of data) {
-  //   await client.index({
-  //     index: "bible",
-  //     refresh: "true",
-  //     body: elem
-  //   }).then((res) => {
-  //     // console.log(res)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  // }
-  
-  // await client.index({
-  //   index: "bible",
-  //   refresh: "true",
-  //   body: data[0]
-  // }).then((res) => {
-  //   console.log(res)
-  // }).catch((err) => {
-  //   console.log(err)
-  // })
 }
 
 async function setupElasticDb(): Promise<void> {

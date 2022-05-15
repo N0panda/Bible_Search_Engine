@@ -6,7 +6,7 @@ export async function matchUserQueryInDatabase(
   indexName: string
 ): Promise<Array<BibleInterface>> {
   const client = new Client({
-    node: process.env.ELASTIC_URI,
+    node: (process.env.ELASTIC_URI || "http://elastic:elastic123@elasticsearch:9200"),
   });
 
   const response = await client
@@ -55,7 +55,7 @@ export async function getFullChapterInDatabase(
   indexName: string
 ): Promise<Array<BibleInterface>> {
   const client = new Client({
-    node: process.env.ELASTIC_URI,
+    node: process.env.ELASTIC_URI || "http://elastic:elastic123@elasticsearch:9200",
   });
 
   const response = await client

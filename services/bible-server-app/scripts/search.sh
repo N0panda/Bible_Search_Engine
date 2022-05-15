@@ -2,8 +2,8 @@ curl --user elastic:elastic123 -XGET --header 'Content-Type: application/json' '
   "_source": ["text", "book", "chapter", "verse", "verseID"],
   "size": 100,
     "query": {
-      "regexp": {
-        "text": "godd *"
+      "match": {
+        "text": "god"
         }
       }
 }'
