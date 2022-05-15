@@ -1,3 +1,5 @@
+import "./title.css";
+
 export function MainTitle() {
   return (
     <div>
