@@ -4,9 +4,30 @@ import { ELASTIC_URI, INDEX_NAME } from "./.config";
 
 async function createElasticIndex(client: Client): Promise<void> {
   const bibleDataTemplate = {
-    settings: {
+    "settings": {
       number_of_shards: 1,
       number_of_replicas: 0,
+      analysis: {
+        analyzer: {
+          my_analyzer: {
+            tokenizer: "standard",
+            // filter: [
+            //   "lowercase", "ngram"
+            // ]
+          }
+        },
+        // filter: {
+        //   ngram: {
+        //     type: "edge_ngram",
+        //     min_gram: 1,
+        //     max_gram: 20,
+        //     token_chars: [
+        //       "letter",
+        //       "digit"
+        //     ]
+        //   }
+        // }
+      }
     },
     mappings: {
       properties: {
@@ -45,17 +66,27 @@ async function fillElasticIndex(client: Client): Promise<void> {
 
   const data = JSON.parse(await readFile("./ressources/KJVBibleParsed.json", "utf8"));
   
-  for (const elem of data) {
-    await client.index({
-      index: "bible",
-      refresh: "true",
-      body: elem
-    }).then((res) => {
-      // console.log(res)
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
+
+  const body = await data.flatMap((doc: any) => [{ index: { _index: 'bible' } }, doc])
+  await client.bulk({
+    refresh: "true",
+    body: body,
+  }).catch((err) => {
+    console.log(err)
+    return;
+  })
+  console.log("Database correctly Filles !")
+  // for (const elem of data) {
+  //   await client.index({
+  //     index: "bible",
+  //     refresh: "true",
+  //     body: elem
+  //   }).then((res) => {
+  //     // console.log(res)
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   })
+  // }
   
   // await client.index({
   //   index: "bible",
@@ -76,6 +107,7 @@ async function setupElasticDb(): Promise<void> {
   await deleteElasticIndex(client);
   console.log(`Creation of ${INDEX_NAME} ...`)
   await createElasticIndex(client);
+  console.log("Filling Database ...")
   await fillElasticIndex(client)
 }
 

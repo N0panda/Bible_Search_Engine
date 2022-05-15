@@ -1,0 +1,1 @@
+curl --user elastic:elastic123 -XGET --header 'Content-Type: application/json' 'http://localhost:9200/bible/_settings?format=json&pretty' 
