@@ -8,34 +8,61 @@ async function createElasticIndex(client: Client): Promise<void> {
       number_of_shards: 1,
       number_of_replicas: 0,
       analysis: {
+        // Analyzer used
         analyzer: {
-          my_analyzer: {
+          index_ngram_analyzer: {
             tokenizer: "standard",
-            // filter: [
-            //   "lowercase", "ngram"
-            // ]
+            filter: ["lowercase", "index_ngram_filter", "stop"],
+          },
+          search_ngram_analyzer: {
+            tokenizer: "standard",
+            filter: ["stop"],
           },
         },
-        // filter: {
-        //   ngram: {
-        //     type: "edge_ngram",
-        //     min_gram: 1,
-        //     max_gram: 20,
-        //     token_chars: [
-        //       "letter",
-        //       "digit"
-        //     ]
-        //   }
-        // }
+        // ######## Custom filter creation #########
+        filter: {
+          index_ngram_filter: {
+            type: "edge_ngram",
+            min_gram: 2,
+            max_gram: 20,
+            token_chars: ["letter", "digit"],
+          },
+          search_ngram_filter: {
+            type: "edge_ngram",
+            min_gram: 2,
+            max_gram: 20,
+            token_chars: ["letter", "digit"],
+          },
+        },
+        // ######## Custom tokenizer creation (ATM not used)#########
+        tokenizer: {
+          edge_ngram_tokenizer: {
+            type: "edge_ngram",
+            min_gram: 2,
+            max_gram: 4,
+          },
+        },
       },
     },
     mappings: {
       properties: {
-        verseID: { type: "keyword" },
-        book: { type: "short" },
-        chapter: { type: "short" },
-        verse: { type: "short" },
-        text: { type: "text" },
+        verseID: {
+          type: "keyword",
+        },
+        book: {
+          type: "short",
+        },
+        chapter: {
+          type: "short",
+        },
+        verse: {
+          type: "short",
+        },
+        text: {
+          type: "text",
+          analyzer: "index_ngram_analyzer",
+          search_analyzer: "standard",
+        },
       },
     },
   };
@@ -88,7 +115,7 @@ async function fillElasticIndex(client: Client): Promise<void> {
 async function waitForUp(client: Client) {
   let connected = false;
   let attempt = 0;
-  let error = null
+  let error = null;
   const maxAttempt = 10;
   while (attempt < maxAttempt) {
     connected = await client
@@ -96,7 +123,6 @@ async function waitForUp(client: Client) {
         {},
         {
           requestTimeout: 2000,
-          
         }
       )
       .then((res) => {
@@ -105,22 +131,24 @@ async function waitForUp(client: Client) {
       .catch((err) => {
         attempt += 1;
         error = err;
-        console.warn(`Trying to reconect => Attempts : [${attempt}/${maxAttempt}]`);
-        return false
+        console.warn(
+          `Trying to reconect => Attempts : [${attempt}/${maxAttempt}]`
+        );
+        return false;
       });
     if (connected) {
       console.log("Client connected !");
       return {
         connected: true,
-        error: null
-      }
-    } 
-    await new Promise(resolve => setTimeout(resolve, 5000));
+        error: null,
+      };
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   }
   return {
     connected: false,
     error,
-  }
+  };
 }
 
 async function setupElasticDb(): Promise<void> {
@@ -128,9 +156,9 @@ async function setupElasticDb(): Promise<void> {
     node: ELASTIC_URI,
   });
 
-  const status = await waitForUp(client)
+  const status = await waitForUp(client);
   if (!status.connected) {
-    console.warn(status.error)
+    console.warn(status.error);
     return;
   }
   await deleteElasticIndex(client);
