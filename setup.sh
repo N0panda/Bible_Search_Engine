@@ -9,8 +9,6 @@ docker-compose up -d
 
 # Setup the database
 echo "Waiting for the database to setup ..."
-sleep 15
 
 # setup the database
-#cd ./services/bible-server-app
 npm --prefix ./services/bible-server-app/ run elastic:init_data
