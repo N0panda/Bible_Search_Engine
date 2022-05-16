@@ -12,7 +12,7 @@ async function createElasticIndex(client: Client): Promise<void> {
         analyzer: {
           index_ngram_analyzer: {
             tokenizer: "standard",
-            filter: ["lowercase", "index_ngram_filter", "stop"],
+            filter: ["lowercase", "index_ngram_filter"],
           },
           search_ngram_analyzer: {
             tokenizer: "standard",
