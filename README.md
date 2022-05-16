@@ -22,13 +22,18 @@ There are 2 differents branches on the repo that can be build the project :
 
 **[Requirements]**
   * Node v16 
-  * Docker  
+  * Docker
 
+**[Build]**
+  > sh setup.sh  
 
 ## automatize-01 (Prefer to use this branch for stability purpose)
 (*On this branch all packages are installed in containers, no volumes are used*)  
 
 **[Requirements]**
   * Docker
+
+**[Build]**
+  > sh setup.sh  
 
 
