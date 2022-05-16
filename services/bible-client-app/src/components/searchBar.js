@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import "./searchBar.css";
 
-function getFormatedDigit(value){
+function getFormatedDigit(value) {
   const converted = String(value);
 
   if (converted.length < 2) return "0" + converted
@@ -10,7 +10,7 @@ function getFormatedDigit(value){
 }
 
 function isMatching(toMatch, needleTab) {
-  for (let i = 0; i < needleTab.length; i +=1) {
+  for (let i = 0; i < needleTab.length; i += 1) {
     if (toMatch.toLowerCase() === needleTab[i].toLowerCase()) return true;
   }
   return false;
@@ -19,7 +19,7 @@ function isMatching(toMatch, needleTab) {
 function buildRegexString(needle) {
   const tab = needle.split(" ")
   let result = ""
-  for (let i=0; i<tab.length; i+=1) {
+  for (let i = 0; i < tab.length; i += 1) {
     result += tab[i];
     if (i + 1 < tab.length && tab[i].replace(/[ ]*/g, "").length > 0) result += "|"
   }
@@ -72,6 +72,9 @@ export function SearchBar() {
         return null
       });
     setData(queryResult)
+    if (queryResult)
+      setData(queryResult)
+    else setData([])
   }
 
   const onchangeHandler = (data) => {
@@ -88,6 +91,7 @@ export function SearchBar() {
           name="search-bar"
           id="search-bar"
           placeholder="Search ..."
+          maxLength="190"
         />
         <div className="searchIcon">
           <img src="search-icone.png" alt="NA" />
@@ -104,16 +108,16 @@ export function SearchBar() {
           {data.map((value, key) => {
             const uniqueKey = `uniqueKey${key}`;
             return <Link key={uniqueKey} className='dataItem' to={{
-            pathname: `/lecture/${value.book}/${value.chapter}/${value.verse}`
-          }} state="{value}" target="_blank">
-            <div className='dataItemContent'>
-              <p className='book'>{getFormatedDigit(value.book)}</p>
-              <p className='chapter'>{getFormatedDigit(value.chapter)}</p>
-              <p className='verse'>{getFormatedDigit(value.verse)}</p>
-              <p className='text'>{ getHilightMatch(value.text, unserInput)}</p>
-            </div>
-          </Link>
-        })}
+              pathname: `/lecture/${value.book}/${value.chapter}/${value.verse}`
+            }} state="{value}" target="_blank">
+              <div className='dataItemContent'>
+                <p className='book'>{getFormatedDigit(value.book)}</p>
+                <p className='chapter'>{getFormatedDigit(value.chapter)}</p>
+                <p className='verse'>{getFormatedDigit(value.verse)}</p>
+                <p className='text'>{getHilightMatch(value.text, unserInput)}</p>
+              </div>
+            </Link>
+          })}
         </div>
       </div>
     </div>
