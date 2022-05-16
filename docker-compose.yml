@@ -52,18 +52,18 @@ services:
     restart: always
 
   ################################## Kibana #######################################
-  kibana:
-    container_name: "kibana"
-    image: docker.elastic.co/kibana/kibana:7.4.0
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - XPACK_SECURITY_ENABLED=true
-      - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=elastic123
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   container_name: "kibana"
+  #   image: docker.elastic.co/kibana/kibana:7.4.0
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+  #     - XPACK_SECURITY_ENABLED=true
+  #     - ELASTICSEARCH_USERNAME=elastic
+  #     - ELASTICSEARCH_PASSWORD=elastic123
+  #   ports:
+  #     - 5601:5601
+  #   depends_on:
+  #     - elasticsearch
 
 volumes:
   elasticsearch-data:
