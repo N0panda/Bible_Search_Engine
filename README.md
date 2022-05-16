@@ -12,11 +12,19 @@
 * BUILD       =>    Shell script / Docker
 
 
-
+  
 # Usage
 
-There are 2 differents branches on the repo that can be build the project :
+There are 2 differents branches on the repo that can be build the project :  
+* [develop](#develop)
+* [automatize-01](#automatize-01) (Prefer to use this branch for stability purpose)  
 
+Website access : http://localhost:3000/
+
+
+
+  
+  
 ## develop
 (*On this branch all npm packages will be locally installed then mounted on the container so you can directly modify the code in the container by modify your code locally.*) 
 
@@ -27,7 +35,9 @@ There are 2 differents branches on the repo that can be build the project :
 **[Build]**
   > sh setup.sh  
 
-## automatize-01 (Prefer to use this branch for stability purpose)
+
+  
+## automatize-01
 (*On this branch all packages are installed in containers, no volumes are used*)  
 
 **[Requirements]**
