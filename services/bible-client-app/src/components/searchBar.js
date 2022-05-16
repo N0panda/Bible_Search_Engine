@@ -71,7 +71,9 @@ export function SearchBar() {
         console.warn(error)
         return null
       });
-    setData(queryResult)
+    if (queryResult)
+      setData(queryResult)
+    else setData([])
   }
 
   const onchangeHandler = (data) => {
@@ -88,6 +90,7 @@ export function SearchBar() {
           name="search-bar"
           id="search-bar"
           placeholder="Search ..."
+          maxLength="190"
         />
         <div className="searchIcon">
           <img src="search-icone.png" alt="NA" />
