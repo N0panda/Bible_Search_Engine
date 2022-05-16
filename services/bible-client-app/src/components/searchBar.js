@@ -21,7 +21,7 @@ function buildRegexString(needle) {
   let result = ""
   for (let i=0; i<tab.length; i+=1) {
     result += tab[i];
-    if (i + 1 < tab.length && tab[i].replace(/[ ]*/g, "").length > 1) result += "|"
+    if (i + 1 < tab.length && tab[i].replace(/[ ]*/g, "").length > 0) result += "|"
   }
   return result
 }
@@ -102,7 +102,8 @@ export function SearchBar() {
         </div>
         <div className='dataItemsContainer'>
           {data.map((value, key) => {
-          return <Link className='dataItem' to={{
+            const uniqueKey = `uniqueKey${key}`;
+            return <Link key={uniqueKey} className='dataItem' to={{
             pathname: `/lecture/${value.book}/${value.chapter}/${value.verse}`
           }} state="{value}" target="_blank">
             <div className='dataItemContent'>
